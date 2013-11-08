@@ -32,8 +32,8 @@ library(plyr)
 guppyList=dlply(guppyData, "flyID")
 
 i=2
-plot(guppyList[[i]]$blobX~guppyList[[i]]$blobY, col="red", pch=".", cex=(guppyList[[i]]$flyArea/100))
-plot(guppyList[[i]]$blobX~guppyList[[i]]$blobY, col="blue", pch=19, cex=(guppyList[[i]]$flyArea/300)^1.5)
+plot(guppyList[[i]]$blobX~-guppyList[[i]]$blobY, col="red", pch=".", cex=(guppyList[[i]]$flyArea/100))
+plot(guppyList[[i]]$blobX~-guppyList[[i]]$blobY, col="blue", pch=19, cex=(guppyList[[i]]$flyArea/300)^1.5)
 
 
 ###################################################

@@ -32,10 +32,17 @@ library(plyr)
 guppyList=dlply(guppyData, "flyID")
 
 i=2
-plot(guppyList[[i]]$blobX~-guppyList[[i]]$blobY, col="red", pch=".", cex=(guppyList[[i]]$flyArea/100))
-plot(guppyList[[i]]$blobX~-guppyList[[i]]$blobY, col="blue", pch=19, cex=(guppyList[[i]]$flyArea/300)^1.5)
+plot(-1*guppyList[[i]]$blobY~guppyList[[i]]$blobX, col="red", pch=19, cex=1, xlim=c(1,800), ylim=c(-600,0))
+plot(-1*guppyList[[i]]$blobY~guppyList[[i]]$blobX, col="blue", pch=19, cex=(guppyList[[i]]$flyArea/300)^1.5, xlim=c(1,800), ylim=c(-600,0))
 
 
+colorMeTickled=palette(rainbow(length(guppyList)))
+i=1
+plot(-1*guppyList[[i]]$blobY~guppyList[[i]]$blobX, col=colorMeTickled[i], pch=19, cex=(guppyList[[i]]$flyArea/300)^1.5, xlim=c(1,800), ylim=c(-600,0))
+for(i in 2: 15){
+points(-1*guppyList[[i]]$blobY~guppyList[[i]]$blobX, col=colorMeTickled[i], pch=19, cex=(guppyList[[i]]$flyArea/300)^1.5, xlim=c(1,800), ylim=c(-600,0))
+
+}
 ###################################################
 ####semi-accurate glossary of variables############
 #### replace fly with guppy########################
