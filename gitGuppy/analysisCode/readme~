@@ -1,0 +1,64 @@
+To start with, here is some dummy code.
+
+####stuff you already know how to do:
+
+setwd("/media/Data/Documents/VideoAnalysis/check_assigment_algorithm/guppy1/gitGuppy/dataFiles/2013_09_06_view0")
+guppyData=read.table("guppy1_out.csv", sep=",", as.is=T, header=T)
+
+head(guppyData)
+hist(guppyData$blobArea, breaks=100)
+hist(guppyData$blobArea, breaks=100)
+
+ellipseArea=guppyData$blobA*guppyData$blobB*3.14
+
+aaa=lm(guppyData$blobArea ~ ellipseArea)
+plot(guppyData$blobArea ~ ellipseArea)
+abline(aaa)
+
+plot((guppyData$blobArea/ellipseArea) ~ guppyData$blobArea) #this is awesome!!!! What does it mean?????
+
+###stuff you don't know how to do
+
+#to save a pdf version of a plot:
+
+dev.copy(pdf, "myPlot.pdf",width=10, height=5)
+dev.off()  ####it's crtically important to remember to run this second line, or everything afterward will be screwed up completely. 
+
+### really advanced stuff:
+
+###we can transform our dataframe into a list, where each list element corresponds to a different guppy.
+###need to download the library plyr
+library(plyr)
+guppyList=dlply(guppyData, "flyID")
+
+i=2
+plot(guppyList[[i]]$blobX~guppyList[[i]]$blobY, col="red", pch=".", cex=(guppyList[[i]]$flyArea/100))
+plot(guppyList[[i]]$blobX~guppyList[[i]]$blobY, col="blue", pch=19, cex=(guppyList[[i]]$flyArea/300)^1.5)
+
+
+###################################################
+####semi-accurate glossary of variables############
+#### replace fly with guppy########################
+
+#frame = 1 still image from a video (video is 15Hz)
+#blobIndex = unique id for each blob. Each blob may have multiple unique flies
+#nFlies = number of flies inferred for each blob
+#flyFrame = number of frames we've been tracking a given fly
+#blobColour = color of paint on one of the flies in the blob (y: yellow; b: blue, g: green, r: red, u: unidentified)
+#blobX = x coordinate of blob centroid
+#blobY = y coordinate of blob centroid
+#blobArea = area of blob
+#blobAngle = angle of long axis of blob ellipse
+#blobA = long axis of blob ellipse
+#blobB = short axis of blob ellipse
+#flyID = unique identifier for each inferred fly (fly[frame trajectorybegins]_[nth new fly for first frame])
+### next few metrics only calculated when fly is alone in a blob
+#deltaX / deltaY = a kind of running average of a fly's movement
+#flySpeed = running average of total distance travelled between frames
+#flyArea = running average of area 
+#flyAspect = running average of blobB/blobA
+
+# areaDeviance = sum(areas of the flies in a blob)-blobArea
+# number of frames there has been a problem ongoing
+
+frame,blobIndex,nFlies,flyFrame,blobColour,blobX,blobY,blobArea,blobAngle,blobA,blobB,flyID,deltaX,deltaY,flySpeed,flyArea,flyAspect,areaDeviance,framesDeviance

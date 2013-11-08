@@ -1,0 +1,62 @@
+# The main loop of the program. Called from preprocess.r
+# Calls subfunctions preProcessFrame(), identifyDuplicates(), createNewFly(), from preprocessFunctions.r
+# and calls out to the function matrixMatching() in matrixMatchingFunctions.r for all the heavy lifting.
+# Every thousand frames, it appends all but the last line of outputData to the output file (this is inelegant, but, anyway)
+
+mainLoopBlobProcessing=function(myData, outputData, dfPrevFrame, blankBlobJect, nBlobs, maxTrax, dataLength, min_area, max_area, min_ratio, max_ratio, filename, setMinArea, minArea){
+  iReps=max(myData$frame)
+  i=myData[1,1]
+  while(i < iReps){
+  #for(i in 2:1901){
+    i=myData[1,1]
+    dfNextFrame=myData[1:maxTrax,]
+    dfNextFrame=na.omit(dfNextFrame)
+    prevNBlobs=nBlobs
+    nBlobs=nrow(dfNextFrame)
+
+    myData=myData[(maxTrax+1):length(myData[,1]),]
+    
+    if(nrow(dfNextFrame)!=0){
+      #there are flies in this line
+      dfNextFrame=preProcessFrame(dfNextFrame, blankBlobJect, maxTrax, dataLength, min_area, max_area, min_ratio, max_ratio)
+      if(is.null(dfNextFrame)){
+	dfNextFrame=blankBlobJect
+      }
+      nBlobs=nrow(dfNextFrame)
+      if(nBlobs>1){
+	dfNextFrame=identify_duplicates(dfNextFrame)
+      }
+      if(nBlobs>0){
+        dfNextFrame$blobIndex=c(1:nrow(dfNextFrame)) 
+	if(prevNBlobs>0){
+	  #there are previous flies we want to match them with
+	  if(setMinArea==1){
+	    dfNextFrame[dfNextFrame$blobArea<minArea,"blobArea"]=minArea
+	  }
+	  dfNextFrame=matrixMatching(dfNextFrame, dfPrevFrame)
+	}else{
+	  #all the blobs are new (joining) flies
+	  dfNextFrame$flyID="new"
+	  dfNextFrame=createNewFly(dfNextFrame)
+	}
+      }
+      
+    }else{ 
+	#In this case there are no flies to worry about on this line. Blankify the line.
+	dfNextFrame=blankBlobJect
+	dfNextFrame$frame=i
+	dfNextFrame$nFlies=0
+    }
+    
+    if(i %% 1000 == 0){
+      write.table(outputData, file=filename, sep=",", row.names=F, col.names=F, quote=F, append=T)
+      outputData=outputData[0,]
+    }
+    
+    outputData=rbind(outputData, dfNextFrame)
+    dfPrevFrame=dfNextFrame
+  }
+
+  write.table(outputData, file=paste(outfile, ".csv", sep=""), sep=",", row.names=F, quote=F, append=T)
+}
+

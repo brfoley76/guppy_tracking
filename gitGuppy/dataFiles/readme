@@ -1,0 +1,9 @@
+Each folder contains:
+.avi (optional)
+.bmp = an average background image, used to detect guppies. We want to use this to extract petri dish statistics, so we can exclude some reflections, and neighboring petri guppies.
+trajectory input data file = frame by frame, each detected blob with associated statistics. usually named in the form "AviFileChunk0_View%d_0_-1_out.txt"
+trajectory output data file = "fly" by "fly" (aka guppies) statistics, with a unique cross frame id for each inferred "fly". Ideally, there'd just be two of these guys, and we'd never lose track of them. In practice, this is clearly not going to be so easy. usually named in the form guppy%d_.out.csv
+
+All data files are comma-separated values (.csv)
+
+

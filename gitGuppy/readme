@@ -1,0 +1,10 @@
+This directory contains 3 subdirectories we will use to share guppy trajectory creation code (trajectoryCode), data files for analysis (dataFiles) and the actual data analysis code (analysisCode).
+
+\dataFiles: each hour of video in a separate subfolder, along with the calculated background .bmp, and a dedicated readme containing the date, experimenter, petri-dish dimensions, and notes. The processed video output, as well as the final trajectory file will be kept in the same folder as the corresponding video and readme. If we run out of space, we can stop uploading the actual video files (but they'll be handy to start with). When you (MR and OL) create output files (like pdfs and tables), stick them in here, in the relevant folders.
+
+\trajectoryCode: the r code I've (BF) written to analyse the raw blob output to create trajectories. 
+
+\analysisCode: This is the stuff I (BF) think you should for the most part be playing with.
+
+
+  

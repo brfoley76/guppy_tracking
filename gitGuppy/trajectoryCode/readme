@@ -1,0 +1,14 @@
+To run this code you need:
+
+libraries lpSolve and fields installed in R (I can show you how to do this, it's pretty easy).
+an input datafile from the video analyser (usually called something like "AviFileChunk0_View0_0_-1_out.txt")
+
+Open "runTrajectorization.r" and set your path variables
+	path = the path to your data file. All the output will go here too.
+	codePath = the path to all the trajectory-analysis functions
+
+set your infile name "infile" to whatever the name of the input datafile is.
+set your output file name "outfile" to something informative (just the first part of the name: "out.csv" will get appended to it.)
+set the petri dish dimensions appropriately (centroidX, centroidY, and patchRadius) as output from ImageJ (e.g.)
+
+Copy and paste the whole thing into R and run it. If it crashes, scream and sulk and break things (I do).
