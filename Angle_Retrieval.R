@@ -50,18 +50,18 @@ for(j in 1:length(Guppy1Headings)){
   newDeviationAngle = correct(x21s[j],x11s[j],y21s[j],y11s[j])
   newDiff1Angle = abs(newDeviationAngle-Guppy1Headings[j])
   if(newDiff1Angle > pi){
-    newDiff1Angle = newDiff1Angle-pi
+    newDiff1Angle = 2*pi - newDiff1Angle
   }
   Guppy1Deviation = append(Guppy1Deviation, newDiff1Angle)
   newDeviationAngle2 = correct(x11s[j], x21s[j], y11s[j], y21s[j])
   newDiff2Angle = abs(newDeviationAngle2-Guppy2Headings[j])
   if(newDiff2Angle > pi){
-    newDiff2Angle = newDiff2Angle-pi
+    newDiff2Angle = 2*pi - newDiff2Angle
   }
   Guppy2Deviation = append(Guppy2Deviation, newDiff2Angle)
   newDiffAngle = abs(Guppy1Headings[j]-Guppy2Headings[j])
   if(newDiffAngle > pi){
-    newDiffAngle = newDiffAngle-pi
+    newDiffAngle = 2*pi - newDiffAngle
   }
   HeadingDiffs = append(HeadingDiffs, newDiffAngle)
 }
