@@ -28,6 +28,7 @@ headings2 = vector(mode = "numeric", length = 0)
 deviations1 = vector(mode = "numeric", length = 0)
 deviations2 = vector(mode = "numeric", length = 0)
 headingDiffs = vector(mode = "numeric", length = 0)
+radiusDiffs = vector(mode = "numeric", length = 0)
 
 correct = function(x1, x2, y1, y2){
   angle = atan((y1-y2)/(x1-x2))
@@ -66,6 +67,7 @@ for(i in 1:length(x11s)){
 }
 for(i in 1:length(headings1)){
   headingDiffs = append(headingDiffs, abs(headings1[i]-headings2[i]))
+  radiusDiffs = append(radiusDiffs, abs(radius1[i]-radius2[i]))
 }
-output = data.frame(radii1, radii2, headings1, headings2, deviations1, deviations2, headingDiffs)
+output = data.frame(radii1, radii2, headings1, headings2, deviations1, deviations2, headingDiffs, radiusDiffs)
 write.csv(output, file = "1d_transform.csv");
